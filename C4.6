@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Задание С4.6</title>
+    <style>
+        .slider {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slider__image-container {
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+
+        .slider__image {
+            width: 100%;
+            height: auto;
+        }
+
+        .slider__button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: transparent;
+            border: none;
+            font-size: 24px;
+            color: #000;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .slider__button:hover {
+            color: #ff0000;
+        }
+
+        .slider__button--prev {
+            left: 10px;
+        }
+
+        .slider__button--next {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="slider">
+    <div class="slider__image-container">
+        <img src="image/koshki-1.jpg" alt="Фото 1" class="slider__image">
+        <img src="image/koshki-2.jpg" alt="Фото 2" class="slider__image">
+        <img src="image/koshki-4.jpg" alt="Фото 3" class="slider__image">
+        <img src="image/koshki-5.jpg" alt="Фото 4" class="slider__image">
+        <img src="image/koshki-6.jpg" alt="Фото 5" class="slider__image">
+        <img src="image/koshki-8.jpg" alt="Фото 6" class="slider__image">
+        <!-- Добление изображений -->
+    </div>
+    <button class="slider__button slider__button--prev" aria-label="Предыдущее фото">
+        Назад
+    </button>
+    <button class="slider__button slider__button--next" aria-label="Следующее фото">
+        Вперед
+    </button>
+
+    
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sliderContainer = document.querySelector('.slider__image-container');
+        const sliderImages = document.querySelectorAll('.slider__image');
+        const prevButton = document.querySelector('.slider__button--prev');
+        const nextButton = document.querySelector('.slider__button--next');
+
+        let currentImageIndex = 0;
+        const totalImages = sliderImages.length;
+
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+            updateSliderPosition();
+        }
+
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % totalImages;
+            updateSliderPosition();
+        }
+
+        function updateSliderPosition() {
+            const slideWidth = sliderImages[0].offsetWidth;
+            const newPosition = -currentImageIndex * slideWidth;
+            sliderContainer.style.transform = `translateX(${newPosition}px)`;
+        }
+
+        prevButton.addEventListener('click', showPrevImage);
+        nextButton.addEventListener('click', showNextImage);
+
+        updateSliderPosition();
+    });
+</script>
+</body>
+</html>
